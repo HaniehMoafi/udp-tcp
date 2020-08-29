@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +15,11 @@ public class Menu {
 
     public Menu() {
         input = new Scanner(System.in);
-        clientName= Arrays.asList("A","B","C");
+        clientName= new ArrayList<>();
+        clientName.add("A");
+        clientName.add("B");
+        clientName.add("C");
+
     }
 
     public int showMenu() {
@@ -38,11 +43,9 @@ public class Menu {
 
     public String showChatMenu(String str) {
         if (clientName.contains(str)){
-            int index=clientName.indexOf(str);
+            clientName.remove(str);
             for (int i = 0; i <clientName.size() ; i++) {
-                if (i!=index) {
                     System.out.println(i + 1 + ") chat with " + clientName.get(i));
-                }
             }
             System.out.println("select Number:");
             int number = input.nextInt();

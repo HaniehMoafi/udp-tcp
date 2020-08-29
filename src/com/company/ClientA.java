@@ -1,12 +1,7 @@
 package com.company;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.io.*;
+import java.net.*;
 
 /**
  * @Author: hanieh Moafi
@@ -17,6 +12,10 @@ public class ClientA {
     private static Menu menu;
     private static int menuResult;
 
+    Socket socket;
+    BufferedReader reader;
+    BufferedWriter writer;
+
     public ClientA(int portNumber) throws SocketException {
         clientSocket = new DatagramSocket(portNumber);
     }
@@ -24,8 +23,8 @@ public class ClientA {
     public static void main(String[] args) {
         menu = new Menu();
         menuResult = menu.showMenu();
+        ClientA client = null;
         if (menuResult == 1) {
-            ClientA client = null;
             try {
                 client = new ClientA(17000);
                 client.run();
@@ -34,12 +33,67 @@ public class ClientA {
             }
         }
         if (menuResult==2){
+            try {
+                String clinetChat=menu.showChatMenu("A");
+                client = new ClientA(17000);
+                client.run2(clinetChat);
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
 
-            String clinet=menu.showChatMenu("A");
+
         }
 
     }
 
+    private void run2(String clientChat) {
+        int port=0 ;
+        if (clientChat.equals("B")) {
+            port = 40000;
+        }else if (clientChat.equals("C")){
+            port=60000;
+        }
+        try {
+            socket = new Socket("localhost", port);
+
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+        } catch (IOException e) {
+            System.out.println("client B is down");
+            System.exit(0);
+        }
+
+        BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+            try {
+                System.out.println("Please enter something: ");
+                String line = consoleReader.readLine();
+                writer.write(line + "\n");
+                writer.flush();
+                if (line.startsWith("exit")) {
+                    break;
+                }
+                line = reader.readLine();
+                System.out.println("Server Response: " + line);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            consoleReader.close();
+            reader.close();
+            writer.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+    //connect to server(UDP)
     public void run() throws IOException {
 
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));

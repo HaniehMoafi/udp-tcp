@@ -16,18 +16,13 @@ public class ClientB {
     ExecutorService pool;
 
     public ClientB() throws IOException {
-        System.out.println("Enter to Constructor");
         serverSocket = new ServerSocket(40000);
-        System.out.println("Server Socket is initialized");
         pool = Executors.newFixedThreadPool(5);
     }
 
     public void run() throws IOException {
         while (true) {
-            System.out.println("Server Socket starts listening");
             Socket connectionSocket = serverSocket.accept();
-            System.out.println("Server Socket find a new connection");
-            //TCP (IP SRC, IP DST, PORT SRC, PORT DST)
             ServerThread serverThread = new ServerThread(connectionSocket);
             pool.execute(serverThread);
         }
@@ -42,12 +37,6 @@ public class ClientB {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-
-
-    public void serverRole(){
 
     }
 

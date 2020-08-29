@@ -17,20 +17,12 @@ public class ServerThread implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Local IP : " +
-                connectionSocket.getLocalAddress().getHostAddress());
-        System.out.println("Local Port : " +
-                connectionSocket.getLocalPort());
-        System.out.println("Remote IP : " +
-                connectionSocket.getInetAddress().getHostAddress());
-        System.out.println("Remote Port : " +
-                connectionSocket.getPort());
 
         while (true) {
             try {
                 System.out.println("**chat start**");
                 String line = reader.readLine();
-                System.out.println("Server received " + line);
+                System.out.println("response:  " + line);
                 if (line.startsWith("hi ")) {
                     String[] tokens = line.split(" ");
                     String name = tokens[1];

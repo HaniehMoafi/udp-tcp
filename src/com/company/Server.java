@@ -1,9 +1,9 @@
 package com.company;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
+import java.net.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -15,7 +15,7 @@ public class Server {
 
     DatagramSocket serverSocket;
 
-    public Server() throws SocketException {
+    public Server() throws IOException {
         serverSocket = new DatagramSocket(20000);
     }
 
