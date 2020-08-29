@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.*;
 import java.net.*;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.Executors;
  * @Date: 8/29/2020
  **/
 
-public class ClientC {
+public class ClientC implements Client{
 
     private DatagramSocket clientSocket;
     private static Menu menu;
@@ -20,108 +21,177 @@ public class ClientC {
     BufferedReader reader;
     BufferedWriter writer;
 
+    ServerSocket serverSocket;
+    ExecutorService pool;
+
     public ClientC(int portNumber) throws IOException {
         clientSocket = new DatagramSocket(portNumber);
     }
 
     public static void main(String[] args) {
         menu = new Menu();
-        menuResult = menu.showMenu();
+        menu.showChatMenu("C");
         doTasks();
     }
 
     private static void doTasks() {
         ClientC client = null;
-        if (menuResult == 1) {
-            try {
-                client = new ClientC(60000);
-                client.run();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        /*if (menuResult == 2) {
-            try {
-                String clinetChat = menu.showChatMenu("C");
-                client = new ClientC(60000);
-                client.run2(clinetChat);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
-        if (menuResult == 9) {
-            menu = new Menu();
-            menuResult = menu.showMenu();
-            doTasks();
-        }
-    }
-
-    private void run2(String clientChat) {
-        int port = 0;
-        if (clientChat.equals("B")) {
-            port = 40000;
-        } else if (clientChat.equals("A")) {
-            port = 17000;
-        }
         try {
-            socket = new Socket("localhost", port);
-
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-
-        } catch (IOException e) {
-            System.out.println("client " + clientChat + " is down");
-            System.exit(0);
-        }
-
-        BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-        while (true) {
-            try {
-                System.out.println("Please enter something: ");
-                String line = consoleReader.readLine();
-                writer.write(line + "\n");
-                writer.flush();
-                if (line.startsWith("exit")) {
-                    break;
-                }
-                line = reader.readLine();
-                System.out.println("Server Response: " + line);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            consoleReader.close();
-            reader.close();
-            writer.close();
-            socket.close();
+            client = new ClientC(3333);
+            client.connect();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    public void run() throws IOException {
+    @Override
+    public void connect() {
 
-        BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+        final Thread outThread = new Thread() {
+            @Override
+            public void run() {
+                BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
-        while (true) {
-            System.out.println("Please enter something");
-            String line = consoleReader.readLine();
-            DatagramPacket packet = new DatagramPacket(line.getBytes(), line.getBytes().length,
-                    InetAddress.getByName("localhost"), 20000);
-            clientSocket.send(packet);
 
-            if (line.startsWith("exit"))
-                break;
+                System.out.println("Please enter  destination client name(client a)");
+                String line = null;
+                try {
+                    line = consoleReader.readLine() + " ";
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                DatagramPacket packet = null;
+                try {
+                    packet = new DatagramPacket(line.getBytes(), line.getBytes().length,
+                            InetAddress.getByName("localhost"), 20000);
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    clientSocket.send(packet);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-            byte[] buffer = new byte[1024];
-            DatagramPacket receivedPacket = new DatagramPacket(buffer, buffer.length);
-            clientSocket.receive(receivedPacket);
+                byte[] buffer = new byte[1024];
+                DatagramPacket receivedPacket = new DatagramPacket(buffer, buffer.length);
+                try {
+                    clientSocket.receive(receivedPacket);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("___________________________");
+                String clientPort = new String(receivedPacket.getData());
+                clientPort = clientPort.replaceAll("\\D+", "");
+                System.out.println("destination port is:" + clientPort);
+                if (Objects.nonNull(clientPort)) {
+                    try {
+                        socket = new Socket("localhost", Integer.parseInt(clientPort));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Write your message");
 
-            System.out.println(new String(receivedPacket.getData()));
+                    while (true) {
+                        System.out.println("say:");
+                        String msg = null;
+                        try {
+                            msg = consoleReader.readLine();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            writer.write(msg + "\n");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            writer.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (msg.startsWith("exit")) {
+                            break;
+                        }
+                        try {
+                            msg = reader.readLine();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("Server Response: " + msg);
+                    }
+                    try {
+                        consoleReader.close();
+                        reader.close();
+                        writer.close();
+                        socket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                clientSocket.close();
+            }
+        };
+        outThread.start();
+
+        final Thread inThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    serverSocket = new ServerSocket(3333);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                pool = Executors.newFixedThreadPool(5);
+
+                while (true) {
+                    Socket connectionSocket = null;
+                    try {
+                        connectionSocket = serverSocket.accept();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ServerThread serverThread = null;
+                    try {
+                        serverThread = new ServerThread(connectionSocket);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    pool.execute(serverThread);
+                }
+            }
+        };
+        inThread.start();
+    }
+
+    @Override
+    public void disconnect() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+//			e.printStackTrace();
         }
+    }
 
-        clientSocket.close();
+    @Override
+    public boolean isConnected() {
+        return socket.isConnected() && !socket.isClosed();
+    }
+
+    @Override
+    public void send(String message) {
+
     }
 }

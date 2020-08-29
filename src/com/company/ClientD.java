@@ -10,15 +10,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientD implements Client{
 
-    private String host;
-    private int port;
-    private String name;
-
     private Socket socket;
-    private volatile AtomicBoolean isFinished = new AtomicBoolean();
 
     private static Menu menu;
-    private static int menuResult;
     private DatagramSocket clientSocket;
     BufferedReader reader;
     BufferedWriter writer;
@@ -29,11 +23,9 @@ public class ClientD implements Client{
 
     public static void main(String[] args) {
         menu = new Menu();
-       // menuResult = menu.showMenu();
         menu.showChatMenu("D");
         doTasks();
     }
-
 
     public ClientD(int portNumber) throws IOException {
         clientSocket = new DatagramSocket(portNumber);
@@ -42,7 +34,7 @@ public class ClientD implements Client{
     private static void doTasks() {
         ClientD client = null;
         try {
-            client = new ClientD(40000);
+            client = new ClientD(4444);
             client.connect();
         } catch (IOException e) {
             e.printStackTrace();
@@ -154,7 +146,7 @@ public class ClientD implements Client{
             @Override
             public void run() {
                 try {
-                    serverSocket = new ServerSocket(40000);
+                    serverSocket = new ServerSocket(4444);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

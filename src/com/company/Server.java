@@ -26,10 +26,10 @@ public class Server {
     public Server() throws IOException {
         serverSocket = new DatagramSocket(20000);
         clients = new ArrayList<>();
-        ClientDTO clientA = new ClientDTO("A", 17000, "localhost");
-        ClientDTO clientB = new ClientDTO("B", 1316, "localhost");
-        ClientDTO clientC = new ClientDTO("C", 60000, "localhost");
-        ClientDTO clientD = new ClientDTO("D", 40000, "localhost");
+        ClientDTO clientA = new ClientDTO("A", 1111, "localhost");
+        ClientDTO clientB = new ClientDTO("B", 2222, "localhost");
+        ClientDTO clientC = new ClientDTO("C", 3333, "localhost");
+        ClientDTO clientD = new ClientDTO("D", 4444, "localhost");
         clients.add(0, clientA);
         clients.add(1, clientB);
         clients.add(2, clientC);
