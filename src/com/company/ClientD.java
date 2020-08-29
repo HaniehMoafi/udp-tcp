@@ -29,7 +29,7 @@ public class ClientD implements Client{
 
     public static void main(String[] args) {
         menu = new Menu();
-        menuResult = menu.showMenu();
+       // menuResult = menu.showMenu();
         menu.showChatMenu("D");
         doTasks();
     }
@@ -108,7 +108,7 @@ public class ClientD implements Client{
                     System.out.println("Write your message");
 
                     while (true) {
-                        System.out.println("testtt:");
+                        System.out.println("say:");
                         String msg = null;
                         try {
                             msg = consoleReader.readLine();
