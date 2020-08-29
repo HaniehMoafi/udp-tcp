@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -8,9 +10,11 @@ import java.util.Scanner;
  **/
 public class Menu {
     Scanner input;
+    List<String> clientName;
 
     public Menu() {
         input = new Scanner(System.in);
+        clientName= Arrays.asList("A","B","C");
     }
 
     public int showMenu() {
@@ -30,5 +34,21 @@ public class Menu {
                 return 0;
 
         }
+    }
+
+    public String showChatMenu(String str) {
+        if (clientName.contains(str)){
+            int index=clientName.indexOf(str);
+            for (int i = 0; i <clientName.size() ; i++) {
+                if (i!=index) {
+                    System.out.println(i + 1 + ") chat with " + clientName.get(i));
+                }
+            }
+            System.out.println("select Number:");
+            int number = input.nextInt();
+            return clientName.get(number-1);
+        }
+        return "0";
+
     }
 }

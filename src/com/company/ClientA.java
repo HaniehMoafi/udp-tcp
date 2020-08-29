@@ -33,6 +33,10 @@ public class ClientA {
                 e.printStackTrace();
             }
         }
+        if (menuResult==2){
+
+            String clinet=menu.showChatMenu("A");
+        }
 
     }
 
