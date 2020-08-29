@@ -19,6 +19,7 @@ public class Menu {
         clientName.add("A");
         clientName.add("B");
         clientName.add("C");
+        clientName.add("D");
 
     }
 
@@ -35,7 +36,7 @@ public class Menu {
             case 2:
                 return 2;
             default:
-                System.out.println("wrong selection!");
+                System.out.println("wrong input!");
                 return 9;
         }
     }

@@ -15,7 +15,7 @@ public class ClientB {
     ExecutorService pool;
 
     public ClientB() throws IOException {
-        serverSocket = new ServerSocket(40000);
+        serverSocket = new ServerSocket(1316);
         pool = Executors.newFixedThreadPool(5);
     }
 

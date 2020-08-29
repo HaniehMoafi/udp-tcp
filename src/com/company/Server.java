@@ -29,11 +29,13 @@ public class Server {
         serverSocket = new DatagramSocket(20000);
         clients = new ArrayList<>();
         ClientDTO clientA = new ClientDTO("A", 17000, "localhost");
-        ClientDTO clientB = new ClientDTO("B", 40000, "localhost");
+        ClientDTO clientB = new ClientDTO("B", 1316, "localhost");
         ClientDTO clientC = new ClientDTO("C", 60000, "localhost");
+        ClientDTO clientD = new ClientDTO("D", 1313, "localhost");
         clients.add(0, clientA);
         clients.add(1, clientB);
         clients.add(2, clientC);
+        clients.add(3, clientD);
     }
 
     private Boolean searchClient(String alias) {
