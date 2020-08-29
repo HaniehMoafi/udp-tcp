@@ -20,11 +20,6 @@ public class Server {
     }
 
     public void run() throws IOException {
-        /**
-         * name {name}  ---> Welcome {name}
-         * upper {line} --->
-         * exit
-         */
         while (true) {
             byte[] buffer = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);

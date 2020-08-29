@@ -28,18 +28,15 @@ public class ServerThread implements Runnable {
                     String name = tokens[1];
                     writer.write("Hello " + name + "\n");
                     writer.flush();
-                }
-                else if (line.startsWith("bye")) {
+                } else if (line.startsWith("bye")) {
                     String[] tokens = line.split(" ");
                     String word = tokens[1];
                     writer.write("see you later " + word + "\n");
 
                     writer.flush();
-                }
-                else if (line.startsWith("exit")) {
+                } else if (line.startsWith("exit")) {
                     break;
-                }
-                else {
+                } else {
                     writer.write("Your keyword is not recognized\n");
                     writer.flush();
                 }

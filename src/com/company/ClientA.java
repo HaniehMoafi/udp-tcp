@@ -23,6 +23,10 @@ public class ClientA {
     public static void main(String[] args) {
         menu = new Menu();
         menuResult = menu.showMenu();
+        doTasks();
+    }
+
+    private static void doTasks() {
         ClientA client = null;
         if (menuResult == 1) {
             try {
@@ -32,26 +36,28 @@ public class ClientA {
                 e.printStackTrace();
             }
         }
-        if (menuResult==2){
+        if (menuResult == 2) {
             try {
-                String clinetChat=menu.showChatMenu("A");
+                String clinetChat = menu.showChatMenu("A");
                 client = new ClientA(17000);
                 client.run2(clinetChat);
             } catch (SocketException e) {
                 e.printStackTrace();
             }
-
-
         }
-
+        if (menuResult == 9) {
+            menu = new Menu();
+            menuResult = menu.showMenu();
+            doTasks();
+        }
     }
 
     private void run2(String clientChat) {
-        int port=0 ;
+        int port = 0;
         if (clientChat.equals("B")) {
             port = 40000;
-        }else if (clientChat.equals("C")){
-            port=60000;
+        } else if (clientChat.equals("C")) {
+            port = 60000;
         }
         try {
             socket = new Socket("localhost", port);
@@ -90,7 +96,6 @@ public class ClientA {
         }
 
     }
-
 
 
     //connect to server(UDP)

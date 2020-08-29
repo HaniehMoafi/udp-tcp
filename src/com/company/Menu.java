@@ -15,7 +15,7 @@ public class Menu {
 
     public Menu() {
         input = new Scanner(System.in);
-        clientName= new ArrayList<>();
+        clientName = new ArrayList<>();
         clientName.add("A");
         clientName.add("B");
         clientName.add("C");
@@ -36,20 +36,19 @@ public class Menu {
                 return 2;
             default:
                 System.out.println("wrong selection!");
-                return 0;
-
+                return 9;
         }
     }
 
     public String showChatMenu(String str) {
-        if (clientName.contains(str)){
+        if (clientName.contains(str)) {
             clientName.remove(str);
-            for (int i = 0; i <clientName.size() ; i++) {
-                    System.out.println(i + 1 + ") chat with " + clientName.get(i));
+            for (int i = 0; i < clientName.size(); i++) {
+                System.out.println(i + 1 + ") chat with " + clientName.get(i));
             }
             System.out.println("select Number:");
             int number = input.nextInt();
-            return clientName.get(number-1);
+            return clientName.get(number - 1);
         }
         return "0";
 
