@@ -35,6 +35,7 @@ public class ServerThread implements Runnable {
 
                     writer.flush();
                 } else if (line.startsWith("exit")) {
+                    //TODO
                     break;
                 } else {
                     writer.write("Your keyword is not recognized\n");

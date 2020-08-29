@@ -2,6 +2,8 @@ package com.company;
 
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @Author: hanieh Moafi
@@ -11,6 +13,7 @@ public class ClientA {
     private DatagramSocket clientSocket;
     private static Menu menu;
     private static int menuResult;
+
 
     Socket socket;
     BufferedReader reader;
@@ -40,7 +43,7 @@ public class ClientA {
             try {
                 String clinetChat = menu.showChatMenu("A");
                 client = new ClientA(17000);
-                client.run2(clinetChat);
+              //  client.run2(clinetChat);
             } catch (SocketException e) {
                 e.printStackTrace();
             }
@@ -52,7 +55,7 @@ public class ClientA {
         }
     }
 
-    private void run2(String clientChat) {
+  /*  private void run2(String clientChat) {
         int port = 0;
         if (clientChat.equals("B")) {
             port = 40000;
@@ -66,7 +69,7 @@ public class ClientA {
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
         } catch (IOException e) {
-            System.out.println("client " + clientChat + " is down");
+            System.out.println("client  is down");
             System.exit(0);
         }
 
@@ -96,7 +99,7 @@ public class ClientA {
         }
 
     }
-
+*/
 
     //connect to server(UDP)
     public void run() throws IOException {
@@ -104,7 +107,7 @@ public class ClientA {
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
         while (true) {
-            System.out.println("Please enter something");
+            System.out.println("Please enter something(client a)");
             String line = consoleReader.readLine();
             DatagramPacket packet = new DatagramPacket(line.getBytes(), line.getBytes().length,
                     InetAddress.getByName("localhost"), 20000);
