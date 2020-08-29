@@ -8,13 +8,13 @@ import java.net.Socket;
 import java.util.Objects;
 
 /**
- * @Author: hanieh Moafi
+ * @Author: Dorsa Jelvani
  * @Date: 8/29/2020
  **/
 public class ClientA {
     private DatagramSocket clientSocket;
     private static Menu menu;
-    private static int menuResult;
+
 
 
     Socket socket;
@@ -28,7 +28,7 @@ public class ClientA {
 
     public static void main(String[] args) {
         menu = new Menu();
-        menuResult = menu.showMenu();
+       // menuResult = menu.showMenu();
         menu.showChatMenu("A");
         doTasks();
     }
@@ -70,7 +70,7 @@ public class ClientA {
             System.out.println("Write your message");
 
             while (true) {
-                System.out.println("testtt:");
+                System.out.println("say:");
                 String msg = consoleReader.readLine();
                 writer.write(msg + "\n");
                 writer.flush();

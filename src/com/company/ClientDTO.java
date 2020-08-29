@@ -1,9 +1,10 @@
 package com.company;
 
 /**
- * @Author: hanieh Moafi
+ * @Author: Dorsa Jelvani
  * @Date: 8/29/2020
  **/
+
 public class ClientDTO {
 
     private String clientAlias;

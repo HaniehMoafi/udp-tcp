@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * @Author: hanieh Moafi
+ * @Author: Dorsa Jelvani
  * @Date: 8/29/2020
  **/
 public class ClientB {
@@ -17,6 +17,7 @@ public class ClientB {
     public ClientB() throws IOException {
         serverSocket = new ServerSocket(1316);
         pool = Executors.newFixedThreadPool(5);
+
     }
 
     public void run() throws IOException {

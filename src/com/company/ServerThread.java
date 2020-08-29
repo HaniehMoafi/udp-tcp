@@ -4,6 +4,11 @@ package com.company;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * @Author: Dorsa Jelvani
+ * @Date: 8/29/2020
+ **/
+
 public class ServerThread implements Runnable {
     Socket connectionSocket;
     BufferedReader reader;

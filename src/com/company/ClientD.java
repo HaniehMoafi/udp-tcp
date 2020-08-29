@@ -42,7 +42,7 @@ public class ClientD implements Client{
     private static void doTasks() {
         ClientD client = null;
         try {
-            client = new ClientD(1313);
+            client = new ClientD(40000);
             client.connect();
         } catch (IOException e) {
             e.printStackTrace();
@@ -154,7 +154,7 @@ public class ClientD implements Client{
             @Override
             public void run() {
                 try {
-                    serverSocket = new ServerSocket(1313);
+                    serverSocket = new ServerSocket(40000);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

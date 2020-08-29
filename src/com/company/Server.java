@@ -13,7 +13,7 @@ import java.util.Objects;
 
 
 /**
- * @Author: dorsa jelvani
+ * @Author: Dorsa Jelvani
  * @Date: 8/29/2020
  **/
 
@@ -21,9 +21,7 @@ public class Server {
     DatagramSocket serverSocket;
     List<ClientDTO> clients;
 
-    Socket socket;
-    BufferedReader reader;
-    BufferedWriter writer;
+
 
     public Server() throws IOException {
         serverSocket = new DatagramSocket(20000);
@@ -31,7 +29,7 @@ public class Server {
         ClientDTO clientA = new ClientDTO("A", 17000, "localhost");
         ClientDTO clientB = new ClientDTO("B", 1316, "localhost");
         ClientDTO clientC = new ClientDTO("C", 60000, "localhost");
-        ClientDTO clientD = new ClientDTO("D", 1313, "localhost");
+        ClientDTO clientD = new ClientDTO("D", 40000, "localhost");
         clients.add(0, clientA);
         clients.add(1, clientB);
         clients.add(2, clientC);
