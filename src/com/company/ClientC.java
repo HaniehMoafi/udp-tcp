@@ -40,7 +40,7 @@ public class ClientC {
                 e.printStackTrace();
             }
         }
-        if (menuResult == 2) {
+        /*if (menuResult == 2) {
             try {
                 String clinetChat = menu.showChatMenu("C");
                 client = new ClientC(60000);
@@ -48,7 +48,7 @@ public class ClientC {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         if (menuResult == 9) {
             menu = new Menu();
             menuResult = menu.showMenu();

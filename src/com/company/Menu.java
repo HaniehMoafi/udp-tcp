@@ -40,17 +40,18 @@ public class Menu {
         }
     }
 
-    public String showChatMenu(String str) {
+    public void showChatMenu(String str) {
         if (clientName.contains(str)) {
             clientName.remove(str);
             for (int i = 0; i < clientName.size(); i++) {
                 System.out.println(i + 1 + ") chat with " + clientName.get(i));
             }
-            System.out.println("select Number:");
-            int number = input.nextInt();
-            return clientName.get(number - 1);
+            System.out.println("for example type: <get A>");
+            /*System.out.println("wirte <get A>");
+            String number = input.nextLine();
+            return number;*/
+            //return clientName.get(number - 1);
         }
-        return "0";
 
     }
 }

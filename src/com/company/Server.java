@@ -1,16 +1,15 @@
 package com.company;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 
 /**
@@ -25,6 +24,7 @@ public class Server {
     Socket socket;
     BufferedReader reader;
     BufferedWriter writer;
+
     public Server() throws IOException {
         serverSocket = new DatagramSocket(20000);
         clients = new ArrayList<>();
@@ -60,15 +60,14 @@ public class Server {
                 String clientAlias = tokens[1];
                 if (searchClient(clientAlias)) {
                     ClientDTO c = clients.stream().filter(x -> x.getClientAlias().equals(clientAlias)).findAny().orElse(null);
-                    response=String.valueOf(c.getClientPort());
+                    response = String.valueOf(c.getClientPort());
 
                     DatagramPacket sendPacket = new DatagramPacket(response.getBytes(), response.getBytes().length,
                             packet.getAddress(), packet.getPort());
                     serverSocket.send(sendPacket);
-                }
-                else
+                } else
                     response = "client not found";
-                    System.out.println(response);
+                System.out.println(response);
             } else {
                 response = "server can not process";
                 System.out.println(response);
