@@ -66,7 +66,7 @@ public class ClientA {
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
         } catch (IOException e) {
-            System.out.println("client B is down");
+            System.out.println("client " + clientChat + " is down");
             System.exit(0);
         }
 
